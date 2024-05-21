@@ -38,15 +38,29 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/auth/zoom", (req, res) => {
+app.get("/auth/zoom", async (req, res) => {
   const clientId = process.env.ZOOM_API_KEY;
   const redirect_uri = encodeURIComponent(process.env.REDIRECT_URI);
   const responseType = "code";
   const authorizationUrl = `https://zoom.us/oauth/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+  // return res.status(201).json({
+  //   success: true,
+  //   url: authorizationUrl,
+  // });
+
+
+  const result = await axios.get(authorizationUrl, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
   return res.status(201).json({
     success: true,
-    url: authorizationUrl,
+    result: result,
   });
+
+
+
 
 });
 
@@ -186,6 +200,7 @@ app.post('/add-new-meeting', async (req, res) => {
   DURATION = req.body.duration;
   TIMEZONE = req.body.timezone;
   res.redirect("https://zoom-p6sc.onrender.com/auth/zoom");
+
 })
 app.listen(port, () => {
   console.log("Server running");
