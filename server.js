@@ -43,7 +43,13 @@ app.get("/auth/zoom", (req, res) => {
   const redirect_uri = encodeURIComponent(process.env.REDIRECT_URI);
   const responseType = "code";
   const authorizationUrl = `https://zoom.us/oauth/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirect_uri}`;
-  res.redirect(authorizationUrl);
+  // res.redirect(authorizationUrl);
+
+  return res.status(201).json({
+    success: true,
+    data: authorizationUrl,
+  });
+
 });
 
 app.get("/callback", async (req, res) => {
@@ -169,7 +175,7 @@ app.get("/createMeetingAPI", async (req, res) => {
   );
   return res.status(201).json({
     success: true,
-    message: "Grade sent successfully !",
+    message: "Meet created successfully !",
     data: meet,
   });
 
