@@ -1,11 +1,14 @@
-require("dotenv").config();
-const fs = require("fs");
-const express = require("express");
-const axios = require("axios");
+import { config } from "dotenv";
+
+config(); 
+import fs from "fs";
+
+import express from "express";
+import axios from "axios";
 const app = express();
 const port = 3000;
-const cors = require('cors');
-const fetch = require('node-fetch');
+import cors from "cors";
+import fetch from 'node-fetch';
 // view engine
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
