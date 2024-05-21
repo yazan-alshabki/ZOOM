@@ -38,30 +38,15 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/auth/zoom", async (req, res) => {
+app.get("/auth/zoom", (req, res) => {
   const clientId = process.env.ZOOM_API_KEY;
   const redirect_uri = encodeURIComponent(process.env.REDIRECT_URI);
   const responseType = "code";
   const authorizationUrl = `https://zoom.us/oauth/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirect_uri}`;
-  // return res.status(201).json({
-  //   success: true,
-  //   url: authorizationUrl,
-  // });
-
-
-  const result = await axios.get(authorizationUrl, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  });
   return res.status(201).json({
     success: true,
-    result: result,
+    url: authorizationUrl,
   });
-
-
-
-
 });
 
 app.get("/callback", async (req, res) => {
