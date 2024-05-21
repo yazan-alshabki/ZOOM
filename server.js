@@ -174,7 +174,7 @@ app.get("/createMeetingAPI", async (req, res) => {
   return res.status(201).json({
     success: true,
     message: "Meet created successfully !",
-    data: meet.join_url,
+    data: meet,
   });
 
 
