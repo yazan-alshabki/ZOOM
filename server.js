@@ -4,6 +4,12 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 const port = 3000;
+
+let name;
+let start_time;
+let duration;
+let timezone;
+
 app.get("/", async (req, res) => {
   const code = req.query.code;
   try {
@@ -84,6 +90,7 @@ app.get("/refreshToken", async (req, res) => {
   }
 });
 app.get("/createMeetingAPI", async (req, res) => {
+
   const token = fs.readFileSync("data.txt", "utf8");
   async function getMeetings() {
     try {
@@ -145,21 +152,27 @@ app.get("/createMeetingAPI", async (req, res) => {
     }
   }
 
-  //console.log(
 
   const meet = await createMeeting(
-    "YAZAN IS KING NOW2 new meeting",
-    "2024-5-21T11:00:00",
+    name,
+    start_time,
     2,
-    45,
-    "GMT+3",
+    duration,
+    timezone,
     "Team meeting for future videos"
   );
   res.send(meet);
 
-  //);
-  //console.log(await getMeetings());
+
 });
+
+app.post('/add-new-meeting', async (req, res) => {
+  name = req.body.name;
+  start_time = req.body.start_time;
+  duration = req.body.duration;
+  timezone = req.body.timezone;
+  res.redirect("https://zoom-p6sc.onrender.com/auth/zoom");
+})
 app.listen(port, () => {
   console.log("Server running");
 });
