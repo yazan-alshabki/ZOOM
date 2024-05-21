@@ -7,12 +7,6 @@ const port = 3000;
 const cors = require('cors');
 
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
 
 // view engine
 app.use(cors());
@@ -26,7 +20,7 @@ let TIMEZONE;
 app.get("/", async (req, res) => {
   const code = req.query.code;
   try {
-    const response = await axios.post("https://zoom.us/oauth/token", null, {
+    const response = await axios.post("https://cors-anywhere.herokuapp.com/https://zoom.us/oauth/token", null, {
       params: {
         grant_type: "authorization_code",
         code: code,
@@ -49,7 +43,7 @@ app.get("/auth/zoom", (req, res) => {
   const clientId = process.env.ZOOM_API_KEY;
   const redirect_uri = encodeURIComponent(process.env.REDIRECT_URI);
   const responseType = "code";
-  const authorizationUrl = `https://zoom.us/oauth/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+  const authorizationUrl = `https://cors-anywhere.herokuapp.com/https://zoom.us/oauth/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirect_uri}`;
   res.redirect(authorizationUrl);
 });
 
@@ -59,7 +53,7 @@ app.get("/callback", async (req, res) => {
     return res.status(400).send("No code provided");
   }
   try {
-    const response = await axios.post("https://zoom.us/oauth/token", null, {
+    const response = await axios.post("https://cors-anywhere.herokuapp.com/https://zoom.us/oauth/token", null, {
       params: {
         grant_type: "authorization_code",
         code,
@@ -83,7 +77,7 @@ app.get("/callback", async (req, res) => {
 app.get("/refreshToken", async (req, res) => {
   try {
     const refresh_token = req.query.refreshToken;
-    const response = await axios.post("https://zoom.us/oauth/token", null, {
+    const response = await axios.post("https://cors-anywhere.herokuapp.com/https://zoom.us/oauth/token", null, {
       params: {
         grant_type: "refresh_token",
         refresh_token,
@@ -108,7 +102,7 @@ app.get("/createMeetingAPI", async (req, res) => {
   async function getMeetings() {
     try {
       const response = await axios.get(
-        "https://api.zoom.us/v2/users/me/meetings",
+        "https://cors-anywhere.herokuapp.com/https://api.zoom.us/v2/users/me/meetings",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -132,7 +126,7 @@ app.get("/createMeetingAPI", async (req, res) => {
   ) {
     try {
       const response = await axios.post(
-        "https://api.zoom.us/v2/users/me/meetings",
+        "https://cors-anywhere.herokuapp.com/https://api.zoom.us/v2/users/me/meetings",
         {
           topic,
           type,
