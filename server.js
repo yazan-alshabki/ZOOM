@@ -167,7 +167,11 @@ app.get("/createMeetingAPI", async (req, res) => {
     TIMEZONE,
     "Team meeting for future videos"
   );
-  res.send(meet);
+  return res.status(201).json({
+    success: true,
+    message: "Grade sent successfully !",
+    data: meet,
+  });
 
 
 });
