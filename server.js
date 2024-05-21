@@ -171,7 +171,6 @@ app.get("/createMeetingAPI", async (req, res) => {
     TIMEZONE,
     "Team meeting for future videos"
   );
-
   return res.status(201).json({
     success: true,
     message: "Meet created successfully !",
