@@ -54,7 +54,7 @@ app.get("/callback", async (req, res) => {
       },
     });
     res.redirect(
-      `http://localhost:3000/refreshToken?refreshToken=${response.data.refresh_token}`
+      `https://zoom-p6sc.onrender.com/refreshToken?refreshToken=${response.data.refresh_token}`
     );
   } catch (error) {
     console.error("Error:", error);
@@ -77,7 +77,7 @@ app.get("/refreshToken", async (req, res) => {
       },
     });
     let accessToken = fs.writeFileSync("data.txt", response.data.access_token);
-    res.redirect("http://localhost:3000/createMeetingAPI");
+    res.redirect("https://zoom-p6sc.onrender.com/createMeetingAPI");
   } catch (error) {
     console.error("Error", error);
     res.send("Error refreshing token");
