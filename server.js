@@ -171,9 +171,6 @@ app.get("/createMeetingAPI", async (req, res) => {
     TIMEZONE,
     "Team meeting for future videos"
   );
-  console.log(meet.join_url);
-  console.log("======================================================");
-  console.log(meet);
 
   return res.status(201).json({
     success: true,
