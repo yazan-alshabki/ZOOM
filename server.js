@@ -5,10 +5,10 @@ const axios = require("axios");
 const app = express();
 const port = 3000;
 
-let name;
-let start_time;
-let duration;
-let timezone;
+let NAME;
+let START_TIME;
+let DURATION;
+let TIMEZONE;
 
 app.get("/", async (req, res) => {
   const code = req.query.code;
@@ -154,11 +154,11 @@ app.get("/createMeetingAPI", async (req, res) => {
 
 
   const meet = await createMeeting(
-    name,
-    start_time,
+    NAME,
+    START_TIME,
     2,
-    duration,
-    timezone,
+    DURATION,
+    TIMEZONE,
     "Team meeting for future videos"
   );
   res.send(meet);
@@ -167,10 +167,10 @@ app.get("/createMeetingAPI", async (req, res) => {
 });
 
 app.post('/add-new-meeting', async (req, res) => {
-  name = req.body.name;
-  start_time = req.body.start_time;
-  duration = req.body.duration;
-  timezone = req.body.timezone;
+  NAME = req.body.name;
+  START_TIME = req.body.start_time;
+  DURATION = req.body.duration;
+  TIMEZONE = req.body.timezone;
   res.redirect("https://zoom-p6sc.onrender.com/auth/zoom");
 })
 app.listen(port, () => {
