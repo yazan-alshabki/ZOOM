@@ -92,7 +92,12 @@ app.get("/refreshToken", async (req, res) => {
       },
     });
     let accessToken = fs.writeFileSync("data.txt", response.data.access_token);
-    res.redirect("https://zoom-p6sc.onrender.com/createMeetingAPI");
+    // res.redirect("https://zoom-p6sc.onrender.com/createMeetingAPI");
+    return res.status(201).json({
+      success: true,
+      message: "Token refreshed successfully !",
+      data: accessToken,
+    });
   } catch (error) {
     console.error("Error", error);
     res.send("Error refreshing token");
