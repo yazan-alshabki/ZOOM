@@ -1,14 +1,12 @@
-import { config } from "dotenv";
-
-config(); 
-import fs from "fs";
-
-import express from "express";
-import axios from "axios";
+require("dotenv").config();
+const fs = require("fs");
+const express = require("express");
+const axios = require("axios");
 const app = express();
 const port = 3000;
-import cors from "cors";
-import fetch from 'node-fetch';
+const cors = require('cors');
+
+
 // view engine
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -40,17 +38,16 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/auth/zoom", async (req, res) => {
+app.get("/auth/zoom", (req, res) => {
   const clientId = process.env.ZOOM_API_KEY;
   const redirect_uri = encodeURIComponent(process.env.REDIRECT_URI);
   const responseType = "code";
   const authorizationUrl = `https://zoom.us/oauth/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirect_uri}`;
-  const response = await fetch(authorizationUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  return res.status(201).json({
+    success: true,
+    url: authorizationUrl,
   });
+
 });
 
 app.get("/callback", async (req, res) => {
@@ -188,15 +185,8 @@ app.post('/add-new-meeting', async (req, res) => {
   START_TIME = req.body.start_time;
   DURATION = req.body.duration;
   TIMEZONE = req.body.timezone;
-  // res.redirect("https://zoom-p6sc.onrender.com/auth/zoom");
-  const response = await fetch('https://zoom-p6sc.onrender.com/auth/zoom', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  res.redirect("https://zoom-p6sc.onrender.com/auth/zoom");
 })
-
 app.listen(port, () => {
   console.log("Server running");
 });
