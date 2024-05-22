@@ -6,9 +6,15 @@ const app = express();
 const port = 3000;
 const cors = require('cors');
 
+const corsOptions = {
+  origin: 'https://zoom-p6sc.onrender.com',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+  credentials: true
+};
 
 // view engine
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
