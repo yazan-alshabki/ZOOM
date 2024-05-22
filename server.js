@@ -43,10 +43,7 @@ app.get("/auth/zoom", (req, res) => {
   const redirect_uri = encodeURIComponent(process.env.REDIRECT_URI);
   const responseType = "code";
   const authorizationUrl = `https://zoom.us/oauth/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirect_uri}`;
-  return res.status(201).json({
-    success: true,
-    url: authorizationUrl,
-  });
+  res.redirect(authorizationUrl);
 });
 
 app.get("/callback", async (req, res) => {
@@ -92,12 +89,7 @@ app.get("/refreshToken", async (req, res) => {
       },
     });
     let accessToken = fs.writeFileSync("data.txt", response.data.access_token);
-    // res.redirect("https://zoom-p6sc.onrender.com/createMeetingAPI");
-    return res.status(201).json({
-      success: true,
-      message: "Token refreshed successfully !",
-      data: accessToken,
-    });
+    res.redirect("https://zoom-p6sc.onrender.com/createMeetingAPI");
   } catch (error) {
     console.error("Error", error);
     res.send("Error refreshing token");
