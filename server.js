@@ -7,7 +7,10 @@ const port = 3000;
 const cors = require('cors');
 
 const corsOptions = {
-  origin: 'https://zoom-p6sc.onrender.com',
+  origin: '*',
+  methods: 'GET, POST, PUT, DELETE, OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true
 };
 
 // view engine
@@ -42,9 +45,6 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/auth/zoom", (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://zoom-p6sc.onrender.com');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   const clientId = process.env.ZOOM_API_KEY;
   const redirect_uri = encodeURIComponent(process.env.REDIRECT_URI);
   const responseType = "code";
